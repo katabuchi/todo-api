@@ -26,6 +26,19 @@ services:
       - ./frontend/app:/src/app
     ports:
       - "8080:8080"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    tty: true
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: ./backend/app
+        target: /app
 
 volumes:
   db-store:
