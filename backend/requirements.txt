@@ -3,3 +3,4 @@ mysql-connector-python
 djangorestframework
 PyMySQL
 cryptography
+djangorestframework
