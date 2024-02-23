@@ -40,6 +40,15 @@ import { Options, Vue } from 'vue-class-component';
 export default class HelloWorld extends Vue {
   msg!: string
 }
+
+async function fetchToDoList() {
+  const response = await fetch("http://localhost:8000/todos/todo/")
+  const data = await response.json()
+  for (var d of data) {
+    console.log(d)
+  }
+}
+fetchToDoList()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
