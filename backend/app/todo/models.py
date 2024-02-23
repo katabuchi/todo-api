@@ -12,17 +12,17 @@ class ToDo(models.Model):
         default=''
     )
     state = models.IntegerField(
-        choices=Status.choices,
-        default=Status.READY
+        choices = Status.choices,
+        default = Status.READY
     )
     due_at = models.DateField(
         help_text = 'いつやるのか'
     )
     created_at = models.DateField(
-        auto_now_add=True,
-        help_text='作成日'
+        auto_now_add = True,
+        help_text = '作成日'
     )
     updated_at = models.DateField(
-        auto_now=True,
-        help_text='更新日'
+        auto_now = True,
+        help_text = '更新日'
     )
