@@ -26,6 +26,12 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <h3>ToDo List</h3>
+    <ul>
+      <li v-for="todo in todoList" :key="todo.id">
+        {{ todo.text }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -35,20 +41,29 @@ import { Options, Vue } from 'vue-class-component';
 @Options({
   props: {
     msg: String
+  },
+  data() {
+    return {
+      todoList: [],
+    }
+  },
+  methods: {
+    async fetchToDoList() {
+      const response = await fetch("http://localhost:8000/todos/todo/")
+      const data = await response.json()
+      this.todoList = data
+      for (var d of data) {
+        console.log(d)
+      }
+    }
+  },
+  mounted: function() {
+    this.fetchToDoList()
   }
 })
 export default class HelloWorld extends Vue {
   msg!: string
 }
-
-async function fetchToDoList() {
-  const response = await fetch("http://localhost:8000/todos/todo/")
-  const data = await response.json()
-  for (var d of data) {
-    console.log(d)
-  }
-}
-fetchToDoList()
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
