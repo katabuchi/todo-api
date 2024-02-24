@@ -10,6 +10,9 @@ services:
       - type: bind
         source: ./db/conf.d
         target: /etc/mysql/conf.d
+      - type: bind
+        source: ./db/init
+        target: /docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: todo
       MYSQL_USER: user
