@@ -36,29 +36,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { useToDoList } from './ToDoList'
+const { fetchToDoList, todoList } = useToDoList()
 
 export default defineComponent({
   props: {
     msg: String
   },
-  data() {
+  setup() {
+    onMounted(async() => {
+      await fetchToDoList().catch((e) => {
+        console.error(`[ERROR] ${e}`)
+      })
+    })
     return {
-      todoList: [],
+      todoList,
     }
-  },
-  methods: {
-    async fetchToDoList() {
-      const response = await fetch("http://localhost:8000/todos/todo/")
-      const data = await response.json()
-      this.todoList = data
-      for (var d of data) {
-        console.log(d)
-      }
-    }
-  },
-  mounted: function() {
-    this.fetchToDoList()
   }
 })
 </script>
