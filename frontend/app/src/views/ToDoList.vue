@@ -1,16 +1,23 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import ToDoCard from '../components/ToDoCard.vue';
 import AddButton from '../components/AddButton.vue';
+import AddToDoModal from '../components/AddToDoModal.vue';
 import { useToDoList } from '../components/ToDoList';
 
 const { fetchToDoList, todoList } = useToDoList();
+const isOpen = ref(false);
 
 onMounted(async() => {
   await fetchToDoList().catch((e) => {
     console.error(`[ERROR] ${e}`);
   });
 });
+
+function onClick() {
+  isOpen.value = !isOpen.value;
+}
+
 </script>
 
 <template>
@@ -22,7 +29,8 @@ onMounted(async() => {
       :title="todo.text"
       :date="todo.dueAt"
     />
-    <AddButton class="p-add_button"/>
+    <AddButton class="p-add_button" @click="onClick"/>
+    <AddToDoModal :isOpen=isOpen />
   </div>
 </template>
 
