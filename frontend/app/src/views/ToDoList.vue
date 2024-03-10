@@ -1,24 +1,33 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
+import ToDoCard from '../components/ToDoCard.vue';
 import { useToDoList } from '../components/ToDoList';
 
 const { fetchToDoList, todoList } = useToDoList();
-
-const sample = ref('');
 
 onMounted(async() => {
   await fetchToDoList().catch((e) => {
     console.error(`[ERROR] ${e}`);
   });
-  if (todoList.length !== 0) {
-    sample.value =  todoList[0].text;
-  }
 });
-
 </script>
 
 <template>
   <div>
-    <p>{{ sample }}</p>
+    <h1 class="p-title">ToDo List</h1>
+    <ToDoCard
+      v-for="(todo, index) in todoList"
+      :key="index"
+      :title="todo.text"
+      :date="todo.dueAt"
+    />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.p-title {
+  font-size: 1.5rem;
+  text-align: start;
+  margin-left: 15px;
+}
+</style>
